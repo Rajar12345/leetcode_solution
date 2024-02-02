@@ -1,28 +1,21 @@
-int atoi(string s) {
-        //Your code here
-        bool flag = 0;
-        int n = 0;
-        if(s[0] == '-') {
-            flag = 1;
-        }
-        
-        if(flag) {
-            for(int i = 1 ; i < s.size() ; i++) {
-                auto val = s[i] - '0';
-                if(val < 0 or val > 9) {
-                    return -1;
-                }
-                n = (n * 10) + val;
-            }
-        }
-        else {
-            for(int i = 0 ; i < s.size() ; i++) {
-               auto val = s[i] - '0';
-               if(val < 0 or val > 9) {
-                    return -1;
-                }
-                n = (n * 10) + val;
-            }
-        }
-        return flag ? -n : n;
+class Solution {
+ public:
+  vector<int> sequentialDigits(int low, int high) {
+    vector<int> ans;
+    queue<int> q{{1, 2, 3, 4, 5, 6, 7, 8, 9}};
+
+    while (!q.empty()) {
+      const int num = q.front();
+      q.pop();
+      if (num > high)
+        return ans;
+      if (low <= num && num <= high)
+        ans.push_back(num);
+      const int lastDigit = num % 10;
+      if (lastDigit < 9)
+        q.push(num * 10 + lastDigit + 1);
     }
+
+    return ans;
+  }
+};
